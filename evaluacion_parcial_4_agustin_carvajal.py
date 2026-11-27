@@ -40,3 +40,45 @@ def eliminar_libro(lista_libros):
         print("Libro eliminado correctamente.")
     else:
         print(f"El libro '{titulo}' no se encuentra registrado.")
+
+def actualizar_disponibilidad(lista_libros):
+    for libro in lista_libros:
+        libro["disponible"] = libro["copias"] >= 1
+
+def mostrar_libros(lista_libros):
+    actualizar_disponibilidad(lista_libros)
+    print("=== LISTA DE LIBROS ===\n")
+    for libro in lista_libros:
+        estado = "DISPONIBLE" if libro["disponible"] else "SIN COPIAS"
+        print(f"Título: {libro['titulo']}\nCopias: {libro['copias']}\nPréstamo: {libro['prestamo']}\nEstado: {estado}\n" + "*" * 41)
+
+def main():
+    lista_libros = []
+    opcion = 0
+    while opcion != 6:
+        mostrar_menu()
+        opcion = leer_opcion()
+        if opcion == 1:
+            agregar_libro(lista_libros)
+        elif opcion == 2:
+            titulo = input("Ingrese el título del libro a buscar: ")
+            posicion = buscar_libro(lista_libros, titulo)
+            if posicion != -1:
+                libro = lista_libros[posicion]
+                print(f"Encontrado en la posición {posicion}\nTítulo: {libro['titulo']}\nCopias: {libro['copias']}\nPréstamo: {libro['prestamo']}")
+            else:
+                print(f"El libro '{titulo}' no se encuentra registrado.")
+        elif opcion == 3:
+            eliminar_libro(lista_libros)
+        elif opcion == 4:
+            actualizar_disponibilidad(lista_libros)
+            print("Disponibilidad actualizada.")
+        elif opcion == 5:
+            mostrar_libros(lista_libros)
+        elif opcion == 6:
+            print("Gracias por usar el sistema. Vuelva Pronto")
+        print()
+
+main()
+
+
